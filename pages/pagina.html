@@ -1,0 +1,235 @@
+<!doctype html>
+
+<html>
+  <title>
+    Pokedéx - Luiz Carlos
+  </title>
+<head>
+    <meta charset="UTF-8">
+</head>
+ <style>
+     body{
+  background-image:url('https://media.giphy.com/media/1BURfsUHbv4eQ/giphy.gif');
+  background-repeat:repeat;
+  background-size:100px 100px;
+  background-attachment:fixed;
+}
+
+h2{
+  text-align: center;
+}
+
+#cards{
+  display:flex;
+  height: 100%;
+  justify-content:center;
+  align-items: center;
+}
+
+#card-nome {
+  background-color:yellow;
+  border: solid;
+}
+#card-numero {
+  background-color:pink;
+}
+
+input[type="text"] {
+display: block;
+margin : 0 auto;
+}
+
+#foto{
+   display:block;
+   margin: 0 auto;
+   width:250px;
+}
+
+#botao {
+  display:block;
+  margin: 0 auto;
+}
+#botao2 {
+  display:block;
+  margin: 5em 5em 0em 6em;
+}
+
+div {
+  padding:0.4em;
+}
+
+.informacao{
+  border:solid;
+  margin-bottom: 1em;
+}
+
+.borda{
+  border:solid;
+}
+
+#conteiner{
+  display:flex;
+  justify-content: space-around;
+}
+
+#button:hover{
+  background-color:cyan;
+}
+
+.dark{
+  background-image:url('https://media0.giphy.com/media/lOa0tPKiMLdqVdFiS8/giphy-downsized-large.gif');
+  background-repeat:repeat;
+  background-size:350px 350px;
+  background-attachment:fixed;
+}
+
+#first{
+  min-height: 100%;
+}
+
+ </style>
+
+<body id="first">
+  <div id="cards">
+    <div id="card-nome">
+      <h2>Digite o nome do pokemon <br> ou número na pokedex:</h2>
+      <input type="text" id="entrada" value="" onkeypress="keypress(event)" onkeyup="this.value = this.value.toLowerCase();">
+      <button onclick="nomedopoke();changeid()" id="botao">Pesquisar</button>
+      <div id="conteiner">
+        <img class="imagem" id="foto"/ src="https://images3.alphacoders.com/677/thumb-1920-677583.png" width="900">
+        <div>
+          <div class="informacao">Nome: </div>
+          <div class="informacao">id: </div>
+          <div class="informacao">Tipo(s): </div>
+          <div class="informacao">Altura: </div>
+          <div class="informacao">Peso: </div>
+        </div>
+        <div>
+          <div id="info2" class="informacao"><span id="nome"></span></div>
+          <div id="info3" class="informacao"><span id="id"></span></div>
+          <div id="info4" class="informacao"><span id="tipo"></span></div>
+          <div id="info5" class="informacao"><span id="altura"></span></div>
+          <div id="info6" class="informacao"><span id="peso"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script addEventListener>
+        async function loadpokemon(pokemon){
+        const url = "https://pokeapi.co/api/v2/pokemon/" + pokemon
+
+        const resp = await fetch(url)
+        const json = await resp.json()
+
+         document.querySelector('#foto').src = json.sprites.front_default
+         tipo_primario = json.types[0].type.name
+         document.querySelector('#tipo').innerHTML = json.types.length == 1 ? tipo_primario : tipo_primario + ', ' + json.types[1].type.name
+         document.querySelector('#nome').innerHTML = json.name
+         document.querySelector('#id').innerHTML = json.id
+         document.querySelector('#altura').innerHTML = json.height
+         document.querySelector('#peso').innerHTML = json.weight
+         switch (tipo_primario){
+           case 'water':
+              document.querySelector('#card-nome').style.backgroundColor = "blue";
+              break;
+            case 'grass':
+              document.querySelector('#card-nome').style.backgroundColor = "green";
+              break;
+            case 'fire':
+              document.querySelector('#card-nome').style.backgroundColor = "#f13f42";
+              break;
+            case 'poison':
+              document.querySelector('#card-nome').style.backgroundColor = "purple";
+              break;
+            case 'electric':
+              document.querySelector('#card-nome').style.backgroundColor = "yellow";
+              break;
+            case 'normal':
+              document.querySelector('#card-nome').style.backgroundColor = "#e8a27f";
+              break;
+            case 'fighting':
+              document.querySelector('#card-nome').style.backgroundColor = "orange";
+              break;
+            case 'flying':
+              document.querySelector('#card-nome').style.backgroundColor = "#73c7ca";
+              break;
+            case 'ground':
+              document.querySelector('#card-nome').style.backgroundColor = "#dc723f";
+              break;
+            case 'rock':
+              document.querySelector('#card-nome').style.backgroundColor = "#90411b";
+              break;
+            case 'bug':
+              document.querySelector('#card-nome').style.backgroundColor = "#bff01d";
+              break;
+            case 'dragon':
+              document.querySelector('#card-nome').style.backgroundColor = "#6a21c6";
+              break;
+            case 'dark':
+              document.querySelector('#card-nome').style.backgroundColor = "black";
+              break;
+            case 'ghost':
+              document.querySelector('#card-nome').style.backgroundColor = "#3e1170";
+              break;
+            case 'fairy':
+              document.querySelector('#card-nome').style.backgroundColor = "#e591e9";
+              break;
+            case 'ice':
+              document.querySelector('#card-nome').style.backgroundColor = "#49c5ef";
+              break;
+            case 'psychic':
+              document.querySelector('#card-nome').style.backgroundColor = "#e93ac7";
+              break;
+            case 'steel':
+              document.querySelector('#card-nome').style.backgroundColor = "#979798";
+              break;
+         }
+         if (tipo_primario == "dark" || tipo_primario == "ghost"){
+              document.querySelector('#card-nome').style.color = "white";
+          }
+          else{
+              document.querySelector('#card-nome').style.color = "black";
+          }
+        }
+        function keypress(event){
+          if(event.key == "Enter"){
+            nomedopoke();
+            changeid();
+          } else return
+        }
+        function nomedopoke(){
+            var pokemon = document.getElementById("entrada").value;
+            loadpokemon(pokemon)
+        }
+        function luzes(){
+        let element = document.getElementById("light");
+            element.classList.toggle("dark");
+
+            let x = document.getElementById("button")
+
+            if(x.value == "Lights on"){
+            document.getElementById("button").value = "Lights off"}
+            else
+            {
+             document.getElementById("button").value = "Lights on"}
+
+            }
+            function changeid ()
+            {
+            let a = document.getElementById("info2");
+            let b = document.getElementById("info3");
+            let c = document.getElementById("info4");
+            let d = document.getElementById("info5");
+            let e = document.getElementById("info6");
+            a.id = "informacao1";
+            b.id = "informacao1";
+            c.id = "informacao1";
+            d.id = "informacao1";
+            e.id = "informacao1";
+            }
+
+
+  </script>
+</body>
+
+</html>

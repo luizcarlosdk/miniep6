@@ -1,0 +1,15 @@
+# Create the base image
+docker image build . -t miniep6:1.0
+
+# Run the container named miniep on host port 8080 linked to container port 80 using the image miniep6 version 1.0
+docker container run --name miniep -p 8080:80 -d miniep6:1.0
+
+# Link the volume of host to the container
+docker container run --name miniep -p 8080:80 -v ${PWD}/pages/:/usr/src/pages/. -d miniep6:1.0
+
+# Stop the container and remove it
+docker container stop miniep
+docker container rm miniep
+
+# See all running containers
+docker ps
